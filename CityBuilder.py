@@ -47,7 +47,7 @@ def _createFaces(data,floor_points,roof_points):
 def _parsePoints(pointsSvg):
     return list(map(lambda pt : list(map(lambda x: float(x), pt.split(','))), pointsSvg.split(' ')))
 
-def generateBuilding():
+def generateBuilding(filePath,outputPath):
     z_up = EggCoordinateSystem()
     z_up.setValue(CSZupRight)
 
@@ -70,12 +70,7 @@ def generateBuilding():
             #TODO other colors
         }
 
-    doc = minidom.parse('map.svg')  # parseString also exists
-    #colorSet = set()
-    #for path in doc.getElementsByTagName('polyline'):
-    #    colorSet.add(path.getAttribute('stroke')) 
-
-
+    doc = minidom.parse(filePath)  # parseString also exists
 
 
     for line in doc.getElementsByTagName('polyline'):
@@ -105,114 +100,4 @@ def generateBuilding():
 
     
     doc.unlink()
-    data.writeEgg('test.egg')
-    return None
-
-    v1 = EggVertex()
-    v1.setUv((0,0))
-    v1.setPos(LPoint3d(-cell_scale/2,-cell_scale/2,0)),
-    vp.addVertex(v1)
-
-    """
-    #ROOF
-    v5 = EggVertex()
-    v5.setUv((1 * tex_x,0))
-    v5.setPos(LPoint3d(-cell_scale/2,-cell_scale/2,height)),
-    vp.addVertex(v5)
-    v6 = EggVertex()
-    v6.setUv((1 * tex_x,1 * tex_y))
-    v6.setPos(LPoint3d(cell_scale/2,-cell_scale/2,height)),
-    vp.addVertex(v6)
-    v7 = EggVertex()
-    v7.setUv((1 * tex_x,2 * tex_y))
-    v7.setPos(LPoint3d(cell_scale/2,cell_scale/2,height)),
-    vp.addVertex(v7)
-    v8 = EggVertex()
-    v8.setUv((1 * tex_x,3 * tex_y))
-    v8.setPos(LPoint3d(-cell_scale/2,cell_scale/2,height)),
-    vp.addVertex(v8)
-    
-    roofHook = LVector3f(
-                (-cell_scale/2 + cell_scale/2) / 2,
-                (-cell_scale/2 + cell_scale/2) / 2,
-                height,
-            )
-
-    data.addChild(vp)
-
-    
-    
-    floor = EggPolygon('floor')
-    facade1 = EggPolygon('facade1')
-    facade2 = EggPolygon('facade2')
-    facade3 = EggPolygon('facade3')
-    facade4 = EggPolygon('facade4')
-    roof = EggPolygon('roof')
-
-    material = EggMaterial('BaseMaterial')
-    material.setBase((.05,.05,.05,.05))
-    material.setEmit((0,0,0,0))
-    material.setRoughness(0)
-    material.setMetallic(1)
-    data.addChild(material)
-
-    floor.setMaterial(material)
-    facade1.setMaterial(material)
-    facade2.setMaterial(material)
-    facade3.setMaterial(material)
-    facade4.setMaterial(material)
-    roof.setMaterial(material)
-
-
-    floor.addVertex(v1)
-    floor.addVertex(v2)
-    floor.addVertex(v3)
-    floor.addVertex(v4)
-    data.addChild(floor)
-    floor.setNormal((0,0,1))
-    floor.triangulateInPlace(True)
-
-    facade1.addVertex(v1)
-    facade1.addVertex(v2)
-    facade1.addVertex(v6)
-    facade1.addVertex(v5)
-    facade1.setNormal((0,0,1))
-    data.addChild(facade1)
-    facade1.triangulateInPlace(True)
-
-    facade2.addVertex(v2)
-    facade2.addVertex(v3)
-    facade2.addVertex(v7)
-    facade2.addVertex(v6)
-    facade2.setNormal((0,0,1))
-    data.addChild(facade2)
-    facade2.triangulateInPlace(True)
-
-    facade3.addVertex(v3)
-    facade3.addVertex(v4)
-    facade3.addVertex(v8)
-    facade3.addVertex(v7)
-    facade3.setNormal((0,0,1))
-    data.addChild(facade3)
-    facade3.triangulateInPlace(True)
-
-    facade4.addVertex(v4)
-    facade4.addVertex(v1)
-    facade4.addVertex(v5)
-    facade4.addVertex(v8)
-    facade4.setNormal((0,0,1))
-    data.addChild(facade4)
-    facade4.triangulateInPlace(True)
-
-    roof.addVertex(v5)
-    roof.addVertex(v6)
-    roof.addVertex(v7)
-    roof.addVertex(v8)
-    roof.setNormal((0,0,1))
-    data.addChild(roof)
-    roof.triangulateInPlace(True)
-
-    
-    return data, roofHook
-    """
-
+    data.writeEgg(outputPath)

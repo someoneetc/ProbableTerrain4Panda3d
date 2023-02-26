@@ -6,9 +6,9 @@ class Test(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
 
-        buildings = CityBuilder.generateBuilding()
+        CityBuilder.generateBuilding('examples/map1.svg','output/test.egg')
 
-        loader.loadModel('test.egg').reparentTo(render)
+        loader.loadModel('output/test.egg').reparentTo(render)
 
 
 test = Test()
